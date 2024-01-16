@@ -2,6 +2,7 @@ package other;
 import people.Person;
 
 public class Bed extends Furniture{
+    //hello
     private final Mattress mattress;
     public Bed(String name){
         super("bed");
