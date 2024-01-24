@@ -4,7 +4,7 @@ import other.*;
 import interfaces.*;
 import java.util.Objects;
 public abstract class Person implements GoTo {
-    protected final String name;
+     protected final String name;
     protected Mood mood;
     protected Status status = Status.AWAKE;
     protected Room room;
@@ -14,7 +14,7 @@ public abstract class Person implements GoTo {
     }
     public void speak(String speech){
         System.out.printf("\n%s: \"%s\"", name, speech);
-        setMood(mood.HAPPY);
+        setMood(Mood.HAPPY);
     }
     public void think(String thought){
         System.out.printf("%s thinks about %s\n", name, thought );
@@ -22,7 +22,6 @@ public abstract class Person implements GoTo {
     public void sit(Furniture furniture){
         System.out.printf("%s sit at the %s\n", name, furniture.getName());
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,9 +45,10 @@ public abstract class Person implements GoTo {
         System.out.printf("%s goes to %s\n", name, room.getName());
     }
     @Override
-    public void goTo(Room room, Person person) {
+    public String goTo(Room room, Person person) {
         setRoom(room);
         System.out.printf("%s goes to %s\n", name, room.getName());
+        return null;
     }
     public void setMood(Mood mood) {
         this.mood = mood;
@@ -56,15 +56,12 @@ public abstract class Person implements GoTo {
     public void setStatus(Status status) {
         this.status = status;
     }
-
-
-
     public void setRoom(Room room) {
         this.room = room;
     }
     public void showEmotion(){
         switch(mood){
-            case HAPPY -> System.out.printf("%s smile\n", name);
+            case HAPPY -> System.out.printf("\n%s smile", name);
             case SAD -> System.out.printf("%s cry\n", name);
             case NULL -> System.out.printf("%s is totally ok\n", name);
         }

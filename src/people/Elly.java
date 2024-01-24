@@ -6,13 +6,12 @@ import java.util.ArrayList;
 
 public class Elly extends Person implements SleepAble {
     public Elly(String name) {
-
-        super("Elly");
+        super(name);
     }
     public String sleep() {
         setStatus(Status.SLEEP);
         class Things {
-            private String nameOfthing;
+            private final String nameOfthing;
             Things(String nameOfthing) {
                 this.nameOfthing = nameOfthing;
             }

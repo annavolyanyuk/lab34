@@ -1,11 +1,10 @@
-import enums.Mood;
-import other.Room;
+import enums.*;
 import people.*;
 import other.*;
 import interfaces.*;
-
+import exceptions.*;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws EmptyTruckException {
         Gadge gadge = new Gadge("Gadge");
         Elly elly = new Elly("Elly");
         Louis louis = new Louis("Louis");
@@ -16,6 +15,7 @@ public class Main {
         Room kitchen = new Room("kitchen", 5);
         Room garage = new Room("garage", 10);
         Room porch = new Room("porch", 5);
+        Room bedroom = new Room("bedroom", 3);
         Movers movers = new Movers("movers");
         House house = new House(10, 10);
 
@@ -26,37 +26,34 @@ public class Main {
         house.addRoom(porch);
         house.addPerson(louis);
         house.addPerson(rachel);
-
         elliesRoom.addPerson(elly);
         gadgeRoom.addPerson(gadge);
+
         gadge.setMood(Mood.TIRED);
         System.out.print(gadge.sleep());
         gadgeRoom.getBed().addPerson(gadge);
         elly.setMood(Mood.TIRED);
         System.out.print(elly.sleep());
         elliesRoom.getBed().getMattress().addPerson(elly);
-        SleepAble cherch = new SleepAble(){
-            @Override
-            public String sleep(){
-                return "Cherch sleeps purring";
-            }
-        };
+        SleepAble cherch = () -> "Cherch sleeps purring";
         System.out.println(cherch.sleep());
+
         rachel.carryChild(gadge);
         rachel.checkPlace(2);
         rachel.askToReplace(movers);
-        louis.doSmt();
+        louis.dealtWithMoving();
         louis.goTo(porch);
-        String[] truck = {"clothes", "furniture", "boxes", "toys", "kitchen equipment"};
-        truck = movers.unloadTruck(truck);
+        String[] truck = {"clothes", "furniture", "boxes", "toys", "kitchen equipment" };
+        movers.unloadTruck(truck);
         movers.move(furniture, garage);
         louis.giveCheck(truck, movers);
         louis.think("beer in Bangor");
-        Furniture table = new Furniture("table");
+        Furniture table = new Furniture("table", 6);
         GoTo goToRoom = new GoTo(){
             @Override
-            public void goTo(Room room, Person person){
-                System.out.printf("%s goes to %s\n", person.getName(), room.getName());
+            public String goTo(Room room, Person person){
+                System.out.printf("%s go to %s\n", person.getName(), room.getName());
+                return  person.getName() + " go to " + room.getName();
             }
             @Override
             public void goTo(Room room) {
@@ -68,15 +65,17 @@ public class Main {
         kitchen.addPerson(rachel);
         louis.sit(table);
         rachel.sit(table);
-        rachel.setMood(Mood.TORTURED);
-        louis.speak("Hey, go to sleep!");
+        table.addPerson(louis);
+        table.addPerson(rachel);
+        louis.speak("Hey, go to " + Status.SLEEP);
         rachel.speak("Is it doctors order?");
         louis.speak("Yes");
-        rachel.speak("Okey, i am " + rachel.getMood() + ". Are you going to bedroom with me?" );
+        rachel.setMood(Mood.TORTURED);
+        rachel.speak("Okey, i am " + rachel.getMood() + ". Do you,"+ goToRoom.goTo(bedroom, louis) + " with me?");
         louis.speak("No, i dont want to. That old man from street...");
         rachel.speak("Road. Call it road. We are not in the city. Or if you and Jud Crendell are such good friends, you may call it \"roud\"");
         louis.setMood(Mood.TIRED);
-        louis.speak("Okey. Also he invited me to drinks. I want to see him. I am "+ louis.getMood() + ", but i dont wanna sleep.");
+        louis.speak("Okey. Also he invited me to drinks. I want to see him. I am "+ louis.getMood() + ", but i don't wanna " + Status.SLEEP);
         rachel.showEmotion();
     }
 }

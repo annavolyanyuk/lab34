@@ -1,8 +1,10 @@
 package people;
 
+import enums.Mood;
+
 public class Rachel extends Person {
     public Rachel(String name) {
-        super("Rachel");
+        super(name);
     }
 
     public void carryChild(Person child) {
@@ -10,6 +12,7 @@ public class Rachel extends Person {
     }
 
     public void checkPlace(int numberOftimes) {
+        setMood(Mood.TORTURED);
         switch (numberOftimes) {
             case 1:
                 System.out.println(", checked places one time");
@@ -23,6 +26,6 @@ public class Rachel extends Person {
 
     }
     public void askToReplace(Movers movers) {
-        System.out.printf("asked to replace %s something", movers.getName());
+        System.out.printf("asked to replace %s something\n", movers.getName());
     }
 }

@@ -1,14 +1,12 @@
 package other;
-
 import exceptions.NoSpaceError;
-import enums.*;
 import people.Person;
 
 public class Room {
     private String name;
-    private Person[] persons;
+    private final Person[] persons;
     private int personsCount;
-    private Bed bed;
+    private final Bed bed;
 
     public Room(String name, int capacity) {
         this.name = name;
